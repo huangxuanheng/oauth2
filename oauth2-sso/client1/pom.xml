@@ -8,7 +8,7 @@
         <version>2.3.5.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>org.javaboy</groupId>
+    <groupId>com.harry</groupId>
     <artifactId>client1</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>client1</name>
