@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.harry</groupId>
-    <artifactId>security-form2</artifactId>
+    <artifactId>security-json</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>security-form2</name>
+    <name>security-json</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>1.8</java.version>
