@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harry.security.mapper.UserMapper">
+
+    <resultMap id="BaseUser" type="com.harry.security.entity.User" >
+        <id property="username" column="username" ></id>
+        <result property="password" column="password" ></result>
+        <result property="enabled" column="enabled" ></result>
+        <collection property="authorities" ofType="com.harry.security.entity.Authority">
+            <result property="username" column="username"/>
+            <result property="authority" column="authority"/>
+        </collection>
+    </resultMap>
+    <select id="findUserByUsername" resultMap="BaseUser" parameterType="string">
+        select u.username,u.`password`,u.enabled,hauth.authority from h_user u LEFT JOIN h_authorities hauth on hauth.username=u.username where u.username=#{username}
+    </select>
+
+</mapper>
