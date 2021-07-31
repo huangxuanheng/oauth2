@@ -1,0 +1,17 @@
+spring:
+  #数据库连接配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/harry?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: test123456!@#$%
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.harry.security.entity
+
+harry:
+  jwt:
+    secret: e9948PG02lURjvhjotDGQ6ksRdz3920MEfdy0q6HIszaxNNXw5D1yGq7l3zVWVfUbPBSA56JMqawy7Mt2vPDx5AveuOHHpT0uZB   #随机生成，可在百度上自行搜索，或者自己取随机字符串
+#    expMillis: 14400000   #4个小时候过期，可根据实际情况自行修改
+    expMillis: 20000   #4个小时候过期，可根据实际情况自行修改
