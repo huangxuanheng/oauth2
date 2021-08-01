@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harry.security.mapper.MenuMapper">
+
+    <select id="findMenusByRoleId" resultType="com.harry.security.entity.Menu" parameterType="integer">
+        SELECT m.id,m.`name`,m.parent_id,m.url from h_menu m
+        LEFT JOIN h_role_menu rm
+        on rm.menu_id=m.id
+        WHERE rm.role_id=#{roleId};
+    </select>
+    <select id="findAllMenus" resultType="com.harry.security.entity.Menu">
+        SELECT m.id,m.`name`,m.parent_id,m.url from h_menu m
+    </select>
+
+</mapper>

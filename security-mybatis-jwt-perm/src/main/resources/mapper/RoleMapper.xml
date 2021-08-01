@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harry.security.mapper.RoleMapper">
+
+    <select id="findRolesByUserId" resultType="com.harry.security.entity.Role" parameterType="integer">
+        select role.id,role.`name`,role.`code` from h_role role
+        LEFT JOIN h_role_user ru on ru.role_id=role.id
+        WHERE ru.user_id=#{userId}
+    </select>
+
+    <select id="findRolesByUrl" resultType="com.harry.security.entity.Role" parameterType="string">
+        select role.id,role.`name`,role.`code` from h_role role
+        LEFT JOIN h_role_menu rm on rm.role_id=role.id
+        LEFT JOIN h_menu m on m.id=rm.menu_id
+        WHERE m.url=#{url};
+    </select>
+</mapper>

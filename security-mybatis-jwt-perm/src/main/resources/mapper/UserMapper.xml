@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harry.security.mapper.UserMapper">
+
+    <resultMap id="BaseUser" type="com.harry.security.entity.User" >
+        <id property="id" column="id" ></id>
+        <result property="username" column="username" ></result>
+        <result property="password" column="password" ></result>
+        <result property="enabled" column="enabled" ></result>
+    </resultMap>
+    <select id="findUserByUsername" resultMap="BaseUser" parameterType="string">
+        select u.id,u.username,u.`password`,u.enabled from h_user u where u.username=#{username};
+    </select>
+
+</mapper>
