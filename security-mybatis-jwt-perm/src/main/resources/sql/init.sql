@@ -46,8 +46,7 @@ INSERT INTO `h_menu` (`name`, `url`) VALUES ('后台管理', '/admin'),('用户�
 
 INSERT INTO `h_role_menu` (`role_id`, `menu_id`) VALUES (1, 1),(1,2),(2,2);
 
-
-INSERT INTO `h_role_user` (`role_id`, `user_id`) VALUES (1, 1),(1,2),(2,2);
+INSERT INTO `h_role_user` (`role_id`, `user_id`) VALUES (1, 1),(2,2);
 
 
 
