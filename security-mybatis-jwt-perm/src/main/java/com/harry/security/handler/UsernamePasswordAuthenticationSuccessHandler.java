@@ -3,6 +3,7 @@ package com.harry.security.handler;
 import com.alibaba.fastjson.JSON;
 import com.harry.security.entity.User;
 import com.harry.security.utils.JWTUtils;
+import com.harry.security.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -42,6 +43,7 @@ public class UsernamePasswordAuthenticationSuccessHandler implements Authenticat
         claims.put("authorities",user.getAuthorities());
         claims.put("enabled",user.isEnabled());
         claims.put("expiresIn",(System.currentTimeMillis()+expMillis));
+        claims.put("passwordModifyTarget", MD5Util.MD5(MD5Util.MD5(user.getPassword())));
 
         String token = JWTUtils.getAccessToken(secret, claims);
 

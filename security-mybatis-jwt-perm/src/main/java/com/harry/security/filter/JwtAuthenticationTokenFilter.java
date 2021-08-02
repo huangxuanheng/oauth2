@@ -1,6 +1,7 @@
 package com.harry.security.filter;
 
 import com.harry.security.utils.JWTUtils;
+import com.harry.security.utils.MD5Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -53,18 +54,30 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             return;
         }
         String username = (String) parseJWT.get("username");
-        if(StringUtils.hasText(username)&& SecurityContextHolder.getContext().getAuthentication() == null){
-            //正常用户
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            if(userDetails!=null&&userDetails.isEnabled()){
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        if(StringUtils.hasText(username)){
+            UserDetails userDetails=null;
+            if(SecurityContextHolder.getContext().getAuthentication() == null){
+                //正常用户
+                userDetails = userDetailsService.loadUserByUsername(username);
+                if(userDetails!=null&&userDetails.isEnabled()){
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                //设置用户登录状态
-                log.info("authenticated user {}, setting security context",username);
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                    //设置用户登录状态
+                    log.info("authenticated user {}, setting security context",username);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            }else {
+                userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             }
+            String passwordModifyTarget = (String) parseJWT.get("passwordModifyTarget");
+            //校验是否修改过密码
+            if(passwordModifyTarget==null||!passwordModifyTarget.equals( MD5Util.MD5(MD5Util.MD5(userDetails.getPassword())))){
+                //密码已经修改，重置数据，重新登录
+                SecurityContextHolder.getContext().setAuthentication(null);
+            }
+
         }
         filterChain.doFilter(request,response);
     }
